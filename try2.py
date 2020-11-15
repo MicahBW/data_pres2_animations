@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import random
+import sys
 
 
 # plt.plot(1,1, "ro")
@@ -9,6 +10,8 @@ import random
 
 X, Y = 0, 1
 K = 2
+FLOAT_MAX = sys.float_info.max
+
 
 
 def get_data(mu, sigma, length):
@@ -26,7 +29,7 @@ def euclid(p0, p1) :
 a = get_data((1, 1), (.5, .5), 10)
 b = get_data((8,8), (1, 1) , 10)
 
-both = np.concatenate((a, b), axis = 1)
+all_d_sets = np.concatenate((a, b), axis = 1)
 
 
 
@@ -36,10 +39,36 @@ plt.plot(b[0], b[1], "bo")
 # plt.xlim(0,10)
 # plt.ylim(0,10)
 
-plt.show()
+#plt.show()
 
+print all_d_sets
 
-# Forgy initialization
-
-
-# Choose k random means
+d_to_concat = np.concatenate((all_d_sets, [-1] ), axis = 1)
+#
+# data = all_d_sets.T
+#
+# # Forgy initialization
+#
+#
+# # Choose k random means
+# initial_means_indexes = random.sample(range(0, data.size - 1), K)
+# means = []
+# for i in initial_means_indexes:
+#     means.append(data[i])
+# print means
+# assignments = [-1]*data.size
+#
+#
+#
+# # We're going to need to do the following every time
+# for point in datas :
+#     min_mean = FLOAT_MAX
+#     for mean in means:
+#         distance = euclid(point, mean)
+#         if distance < min_mean:
+#             min_mean = distance
+#             assignments
+#
+#
+#
+# #
