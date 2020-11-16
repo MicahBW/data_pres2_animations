@@ -34,9 +34,10 @@ def graph_format(data):
 
 
 a = get_data((1, 1), (.2, .2), 10)
-b = get_data((4,4), (1, 1) , 10)
+b = get_data((5,5), (1, 1) , 10)
+c = get_data((3,3), (3, 3) , 20)
 
-data = np.concatenate((a, b), axis = 0)
+data = np.concatenate((a, b, c), axis = 0)
 
 # print data
 
@@ -44,8 +45,8 @@ data = np.concatenate((a, b), axis = 0)
 # plt.plot(graph_format(b)[X],graph_format(b)[Y],'bo')
 # plt.plot(graph_format(data)[X],graph_format(data)[Y],'bo')
 # plt.show()
-# plt.xlim(0,10)
-# plt.ylim(0,10)
+plt.xlim(0,10)
+plt.ylim(0,10)
 
 #plt.show()
 
@@ -55,18 +56,15 @@ data = np.concatenate((a, b), axis = 0)
 
 
 # Choose k random means
-initial_means_indexes = random.sample(range(0, len(data) - 1), K)
+initial_means_indexes = random.sample(range(0, len(data)), K)
 means = []
 for i in initial_means_indexes:
-    # means.append(data[i])]
-    break
+    means.append(data[i])
 print means
 
 
-means = [data[0], data[1]]
-# for point in data:
-#     point.append(-1)
-# print data
+# means = [data[0], data[1]]
+
 
 
 assignments = np.array([[-1]] * len(data))
@@ -76,12 +74,42 @@ dws = np.concatenate((data, assignments), axis = 1) # defines the data with assi
 
 
 
+# Divide the points into two groups
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 ass_colors = ["bo", "ro"]
-
-past_dws = np.array([])
+prev_means = []
+# changes_made = True
 while True:
     # We're going to need to do the following every time
     ps = ""
@@ -95,15 +123,18 @@ while True:
             distance = euclid((point[X], point[Y]), mean)
             if distance < min_mean:
                 min_mean = distance
-                point[ASSIGMENT] = i
-    print ps
+                point[ASSIGMENT] = float(i)
+    # print ps
+
+
     # Check if the point assignments changed
+    # changes_made = False
+    # for i in range(len(dws)):
+    #     if dws[i][ASSIGMENT] != prev_dws[i][ASSIGMENT]:
+    #         changes_made = True
+    #         print changes_made
+    #         break
 
-    print (dws == past_dws)
-
-    if (dws == past_dws).all() :
-        break
-    past_dws = dws
 
     # Recalculate Means
     mean_sum_x = mean_sum_y = 0.0
@@ -119,15 +150,27 @@ while True:
         mean_sum_y = 0.0
         mean_counter = 0.0
 
-        # Plot the points by their assignment
-        for point in dws :
-            plt.plot(point[X], point[Y], ass_colors[int(point[ASSIGMENT])]) # PERROR: Int conversion
 
-        # And plot the means
-        for mean in means:
-            plt.plot(mean[X], mean[Y], "oc")
-        # plt.plot(graph_format(a)[X],graph_format(a)[Y],'gx')
-        plt.show()
+
+
+    # Plot the points by their assignment
+    for point in dws :
+        plt.plot(point[X], point[Y], ass_colors[int(point[ASSIGMENT])]) # PERROR: Int conversion
+
+    # And plot the means
+    for mean in means:
+        plt.plot(mean[X], mean[Y], "oc")
+    for pm in prev_means:
+        plt.plot(pm[X], pm[Y], "oy")
+    # plt.plot(graph_format(a)[X],graph_format(a)[Y],'gx')
+    plt.show()
+
+    # If the point assigments don't change then that imlies that the means won't have changed
+    if prev_means == means:
+        print prev_means
+        print means
+        break
+    prev_means = means
 
 
 
