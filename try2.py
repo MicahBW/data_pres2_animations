@@ -33,46 +33,26 @@ def graph_format(data):
     return [x_val, y_val]
 
 
-a = get_data((0,0), (3, 3), 100)
-# b = get_data((9,0), (1, 1) , 10)
-# c = get_data((5,9), (1, 1) , 20)
+a = get_data((0,0), (1.5, 1.5), 30)
+b = get_data((9,0), (1.5, 1.5), 30)
+c = get_data((5,9), (1.5, 1.5), 30)
 
-# data = np.concatenate((a, b, c), axis = 0)
-data = a
-
-
-# print data
-
-# plt.plot(graph_format(a)[X],graph_format(a)[Y],'ro')
-# plt.plot(graph_format(b)[X],graph_format(b)[Y],'bo')
-# plt.plot(graph_format(data)[X],graph_format(data)[Y],'bo')
-# plt.show()
-# plt.xlim(0,10)
-# plt.ylim(0,10)
-
-#plt.show()
-
-
-
-# Forgy initialization
-
-
-# Choose k random means
-initial_means_indexes = random.sample(range(0, len(data)), K)
-means = []
-for i in initial_means_indexes:
-    means.append(data[i])
-print means
-
-# clusters = np.array([])
-# for i in range(K):
-#     clusters.append(np.array([]))
+data = np.concatenate((a, b, c), axis = 0)
 
 assignments = np.array([[-1]] * len(data))
 dws = np.concatenate((data, assignments), axis = 1) # defines the data with assignments
 
 ass_colors = ["b", "r", "m", "k", "g"]
 prev_means = []
+
+
+
+# Forgy Mean Initialization: Choose initial means at random from data
+initial_means_indexes = random.sample(range(0, len(data)), K)
+means = []
+for i in initial_means_indexes:
+    means.append(data[i])
+
 
 
 while True:
@@ -89,20 +69,11 @@ while True:
                 point[ASSIGMENT] = float(i)
 
     # Vizualization Step
-    # Plot the points by their assignment
     for point in dws :
-        plt.plot(point[X], point[Y], ass_colors[int(point[ASSIGMENT])] + "o") # PERROR: Int conversion
-
-    # And plot the meanss
+        plt.plot(point[X], point[Y], ass_colors[int(point[ASSIGMENT])] + "o")
     for mean in means:
         plt.plot(mean[X], mean[Y], "^c")
-    for pm in prev_means:
-        plt.plot(pm[X], pm[Y], "^y")
-    # plt.plot(graph_format(a)[X],graph_format(a)[Y],'gx')
     plt.show()
-
-
-
 
 
 
