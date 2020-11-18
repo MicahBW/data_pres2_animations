@@ -1,0 +1,10 @@
+
+
+
+THREE TRIANGULAR GROUPS
+
+a = get_data((0,0), (1.5, 1.5), 30)
+b = get_data((9,0), (1.5, 1.5), 30)
+c = get_data((5,9), (1.5, 1.5), 30)
+
+data = np.concatenate((a, b, c), axis = 0)
